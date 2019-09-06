@@ -1,0 +1,11 @@
+name: 'Named Branches'
+on: push
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+    - name: Checkout
+      uses: actions/checkout@v1
+    - uses: Julian/named-branch-action@master
+      with:
+        repo-token: '${{ secrets.GITHUB_TOKEN }}'
