@@ -13,21 +13,22 @@ runs:
   using: 'docker'
   image: 'Dockerfile'
   args:
-    - ${{ inputs.myInput }}
-
-    - name: Add the Branch
-      env:
-        GIT_AUTHOR_NAME: "Named Branches GitHub Action"
-        GIT_COMMITTER_NAME: "Named Branches GitHub Action"
-        NAMED_BRANCHES_REF: "refs/notes/branch"
-      run: 'git notes --ref ${INPUT_REF} add -m "$GITHUB_REF"'
-
-    - name: Configure the remote
-      env:
-        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-      run: 'git remote set-url origin https://${GITHUB_ACTOR}:${GITHUB_TOKEN}@github.com/${GITHUB_REPOSITORY}'
-      
-    - name: Push the new notes
-      env:
-        NAMED_BRANCHES_REF: "refs/notes/branch"
-      run: 'git push origin ${INPUT_REF}:${INPUT_REF}'
+    - ${{ join('https://', github.actor, ':', inputs.repo-token, '@github.com/', github.repository) }}
+    - ${{ github.ref }}
+    - ${{ inputs.ref }}
+    #
+    # - name: Add the Branch
+    #   env:
+    #     GIT_AUTHOR_NAME: "Named Branches GitHub Action"
+    #     GIT_COMMITTER_NAME: "Named Branches GitHub Action"
+    #     NAMED_BRANCHES_REF: "refs/notes/branch"
+    #   run: 'git notes --ref ${INPUT_REF} add -m "$GITHUB_REF"'
+    #
+    # - name: Configure the remote
+    #   env:
+    #     GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+    #   
+    # - name: Push the new notes
+    #   env:
+    #     NAMED_BRANCHES_REF: "refs/notes/branch"
+    #   run: 'git push origin ${INPUT_REF}:${INPUT_REF}'
