@@ -13,20 +13,20 @@ Usage
 For the repository in question, in e.g.
 ``.github/workflows/named-branches.yml``:
 
-```yaml
-name: 'Named Branches'
-on: push
-jobs:
-  named-branches:
-    runs-on: ubuntu-latest
-    steps:
-    - uses: actions/checkout@v2
-      with:
-        fetch-depth: 0
-    - uses: Julian/named-branch-action@main
-      with:
-        github_token: '${{ secrets.GITHUB_TOKEN }}'
-```
+.. code-block:: yaml
+
+    name: 'Named Branches'
+    on: push
+    jobs:
+    named-branches:
+        runs-on: ubuntu-latest
+        steps:
+        - uses: actions/checkout@v2
+        with:
+            fetch-depth: 0
+        - uses: Julian/named-branch-action@main
+        with:
+            github_token: '${{ secrets.GITHUB_TOKEN }}'
 
 (See `action.yml <action.yml>`_ for full details).
 
