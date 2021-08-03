@@ -23,12 +23,11 @@ runs:
         GIT_AUTHOR_NAME: "Named Branches GitHub Action"
         GIT_COMMITTER_NAME: "Named Branches GitHub Action"
       run: |
-        git fetch origin notes/branch
         git notes --ref "${{ inputs.ref }}" add -m "${{ github.ref }}"
       shell: bash
 
     - name: Push the new notes
       env:
         GITHUB_TOKEN: ${{ inputs.github_token }}
-      run: git push origin ${{ inputs.ref }}:${{ inputs.ref }}
+      run: git push --force origin ${{ inputs.ref }}:${{ inputs.ref }}
       shell: bash
