@@ -28,7 +28,9 @@ For the repository in question, in e.g.
         with:
             github_token: '${{ secrets.GITHUB_TOKEN }}'
 
-(See `action.yml <action.yml>`_ for full details).
+See `action.yml <action.yml>`_ for full details, or `this repository
+<https://github.com/Julian/named-branch-action-example/`_ for a fully worked
+example.
 
 Then, in any local clone where you wish to see branch information,
 ensure you're fetching git notes from the remote via e.g.::
