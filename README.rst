@@ -34,3 +34,10 @@ Then, in any local clone where you wish to see branch information,
 ensure you're fetching git notes from the remote via e.g.::
 
     $ git config --add remote.origin.fetch "+refs/notes/*:refs/notes/*"
+
+at which point you can check where a commit came from via::
+
+    $ git notes --ref branch show 710ca11
+
+which will show ``refs/heads/foo`` if ``710ca11`` was committed on the
+``foo`` branch.
