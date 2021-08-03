@@ -41,3 +41,10 @@ at which point you can check where a commit came from via::
 
 which will show ``refs/heads/foo`` if ``710ca11`` was committed on the
 ``foo`` branch.
+
+Notes
+-----
+
+The remote repository only knows about remote branches, so if you
+created some commits on a local branch and then merged it into another
+local branch without pushing, you won't see two branches in the notes.
