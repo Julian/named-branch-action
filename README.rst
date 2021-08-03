@@ -20,7 +20,7 @@ jobs:
   named-branches:
     runs-on: ubuntu-latest
     steps:
-      uses: actions/checkout@v2
+    - uses: actions/checkout@v2
       with:
         fetch-depth: 0
     - uses: Julian/named-branch-action@main
