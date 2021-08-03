@@ -10,11 +10,6 @@ inputs:
     description: 'the GITHUB_TOKEN secret'
     required: true
 
-  ref:
-    description: 'git ref to commit branch names to'
-    required: false
-    default: 'refs/notes/branch'
-
 runs:
   using: 'composite'
   steps:
@@ -23,11 +18,12 @@ runs:
         GIT_AUTHOR_NAME: "Named Branches GitHub Action"
         GIT_COMMITTER_NAME: "Named Branches GitHub Action"
       run: |
-        git notes --ref "${{ inputs.ref }}" add -m "${{ github.ref }}"
+        git fetch origin refs/notes/branch:refs/notes/branch
+        git notes --ref refs/notes/branch add -m "${{ github.ref }}"
       shell: bash
 
     - name: Push the new notes
       env:
         GITHUB_TOKEN: ${{ inputs.github_token }}
-      run: git push --force origin ${{ inputs.ref }}:${{ inputs.ref }}
+      run: git push origin refs/notes/branch:refs/notes/branch
       shell: bash
