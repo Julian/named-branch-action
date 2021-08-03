@@ -20,8 +20,9 @@ jobs:
   named-branches:
     runs-on: ubuntu-latest
     steps:
-    - name: Checkout
       uses: actions/checkout@v2
+      with:
+        fetch-depth: 0
     - uses: Julian/named-branch-action@main
       with:
         github_token: '${{ secrets.GITHUB_TOKEN }}'
