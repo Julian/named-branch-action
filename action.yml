@@ -22,7 +22,9 @@ runs:
       env:
         GIT_AUTHOR_NAME: "Named Branches GitHub Action"
         GIT_COMMITTER_NAME: "Named Branches GitHub Action"
-      run: git notes --ref "${{ inputs.ref }}" add -m "${{ github.ref }}"
+      run: |
+        git fetch
+        git notes --ref "${{ inputs.ref }}" add -m "${{ github.ref }}"
       shell: bash
 
     - name: Push the new notes
