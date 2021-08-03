@@ -1,34 +1,32 @@
 name: 'Named Branches'
 author: 'Julian Berman'
 description: 'hg-style branch naming, implemented via automatic git notes'
+branding:
+  icon: 'git-branch'
+  color: 'red'
+
 inputs:
+  github_token:
+    description: 'the GITHUB_TOKEN secret'
+    required: true
+
   ref:
-    description: 'Ref to commit branch names to'
+    description: 'git ref to commit branch names to'
     required: false
     default: 'refs/notes/branch'
-  repo-token:
-    description: 'The GITHUB_TOKEN secret'
-    required: true
+
 runs:
-  using: 'docker'
-  image: 'Dockerfile'
-  args:
-    - ${{ join('https://', github.actor, ':', inputs.repo-token, '@github.com/', github.repository) }}
-    - ${{ github.ref }}
-    - ${{ inputs.ref }}
-    #
-    # - name: Add the Branch
-    #   env:
-    #     GIT_AUTHOR_NAME: "Named Branches GitHub Action"
-    #     GIT_COMMITTER_NAME: "Named Branches GitHub Action"
-    #     NAMED_BRANCHES_REF: "refs/notes/branch"
-    #   run: 'git notes --ref ${INPUT_REF} add -m "$GITHUB_REF"'
-    #
-    # - name: Configure the remote
-    #   env:
-    #     GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-    #   
-    # - name: Push the new notes
-    #   env:
-    #     NAMED_BRANCHES_REF: "refs/notes/branch"
-    #   run: 'git push origin ${INPUT_REF}:${INPUT_REF}'
+  using: 'composite'
+  steps:
+    - name: Add the Branch
+      env:
+        GIT_AUTHOR_NAME: "Named Branches GitHub Action"
+        GIT_COMMITTER_NAME: "Named Branches GitHub Action"
+      run: git notes --ref "${{ inputs.ref }}" add -m "${{ github.ref }}"
+      shell: bash
+
+    - name: Push the new notes
+      env:
+        GITHUB_TOKEN: ${{ inputs.github_token }}
+      run: git push origin ${{ inputs.ref }}:${{ inputs.ref }}
+      shell: bash
