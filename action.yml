@@ -18,7 +18,7 @@ runs:
         GIT_AUTHOR_NAME: "Named Branches GitHub Action"
         GIT_COMMITTER_NAME: "Named Branches GitHub Action"
       run: |
-        git fetch origin refs/notes/branch:refs/notes/branch
+        git fetch origin refs/notes/branch:refs/notes/branch || true
         git notes --ref refs/notes/branch add -m "${{ github.ref }}"
       shell: bash
 
