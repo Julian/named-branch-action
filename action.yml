@@ -18,8 +18,12 @@ runs:
         GIT_AUTHOR_NAME: "Named Branches GitHub Action"
         GIT_COMMITTER_NAME: "Named Branches GitHub Action"
       run: |
+        set -e
         git fetch origin refs/notes/branch:refs/notes/branch || true
-        git notes --ref refs/notes/branch add -m "${{ github.ref }}"
+        for each in $(git rev-list HEAD); do
+          git notes --ref refs/notes/branch show "$each" >/dev/null 2>&1 && break
+          git notes --ref refs/notes/branch add -m "${{ github.ref }}" "$each"
+        done
       shell: bash
 
     - name: Push the new notes
