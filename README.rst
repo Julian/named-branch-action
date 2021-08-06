@@ -37,7 +37,16 @@ ensure you're fetching git notes from the remote via e.g.::
 
     $ git config --add remote.origin.fetch "+refs/notes/*:refs/notes/*"
 
-at which point you can check where a commit came from via::
+at which point you can show the named branch alongside ``git log`` by running::
+
+    $ git log --notes=branch
+
+If you don't use ``git notes`` for anything else (though you should!) you can
+set ``git config core.notesRef refs/notes/branch`` as well, which will make
+commands like ``git log --notes`` work without explicitly specifying which
+``ref`` the notes live in.
+
+You can also directly check where a commit came from via::
 
     $ git notes --ref branch show 710ca11
 
