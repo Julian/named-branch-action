@@ -19,6 +19,8 @@ runs:
         GIT_COMMITTER_NAME: "Named Branches GitHub Action"
       run: |
         set -e
+        git config user.name "Named Branches GitHub Action"
+        git config user.email"actions@users.noreply.github.com"
         git fetch origin refs/notes/branch:refs/notes/branch || true
         for each in $(git rev-list HEAD); do
           git notes --ref refs/notes/branch show "$each" >/dev/null 2>&1 && break
