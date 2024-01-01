@@ -17,14 +17,16 @@ For the repository in question, in e.g.
 
     name: 'Named Branches'
     on: push
+    permissions:
+      contents: write  # to support pushing the notes
     jobs:
-    named-branches:
+      named-branches:
         runs-on: ubuntu-latest
         steps:
-        - uses: actions/checkout@v4
-          with:
-            fetch-depth: 0
-        - uses: Julian/named-branch-action@v1
+          - uses: actions/checkout@v4
+            with:
+              fetch-depth: 0
+          - uses: Julian/named-branch-action@v1
           with:
             github_token: '${{ secrets.GITHUB_TOKEN }}'
 
