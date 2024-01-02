@@ -13,6 +13,18 @@ inputs:
 runs:
   using: 'composite'
   steps:
+    - name: Identify where we are
+      # refs/someone/their-repo/their-branch when we're receiving a PR
+      # otherwise
+      # refs/heads/branch-name for pushes inside this repository
+      run: |
+        if [ -n "${{ github.head_ref }}" ]; then
+          export CURRENT_BRANCH="refs/${{ github.repository }}/${{ github.head_ref }}"
+        else
+          export CURRENT_BRANCH="${{ github.ref }}"
+        fi
+        echo "CURRENT_BRANCH=${CURRENT_BRANCH}" >> $GITHUB_ENV
+      shell: bash
     - name: Add the Branch
       env:
         GIT_AUTHOR_NAME: "Named Branches GitHub Action"
@@ -24,7 +36,7 @@ runs:
         git fetch origin refs/notes/branch:refs/notes/branch || true
         for each in $(git rev-list HEAD); do
           git notes --ref refs/notes/branch show "$each" >/dev/null 2>&1 && break
-          git notes --ref refs/notes/branch add -m "${{ github.ref }}" "$each"
+          git notes --ref refs/notes/branch add -m "$CURRENT_BRANCH" "$each"
         done
       shell: bash
 
